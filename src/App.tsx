@@ -1,46 +1,39 @@
-import { useQuery } from "@tanstack/react-query";
-import { api } from "@/api";
-import type { Item, ApiResponse } from "@/types";
+import type { FormEvent } from "react";
+import { useCreateItem, useGetItems } from "@/queries/use-item";
+import { Button } from "@/components/ui/button";
+import type { ItemRequest } from "@/types/item";
 
 export default function App() {
-  const getItems = async () => {
-    const { data } = await api.get<ApiResponse<Item>>("/items");
-    return data;
+  const { data: items } = useGetItems();
+  const { mutate, isSuccess } = useCreateItem();
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const item: ItemRequest = {
+      name: "Argentina Cornbeef",
+      price: 50,
+    };
+    mutate(item);
   };
-
-  const {
-    data: items,
-    isPending,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["items"],
-    queryFn: getItems,
-  });
-
-  if (isPending) {
-    return "Fetching data...";
-  }
-
-  if (error) {
-    return "Something went wrong.";
-  }
-
-  if (isLoading) {
-    return "Loading...";
-  }
 
   return (
     <div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      {items.data?.map((item) => {
-        return (
-          <div key={item.id}>
-            <h1>{item.name}</h1>
-            <p>{item.price}</p>
-          </div>
-        );
-      })}
+      {isSuccess && <p>Creation of item is successful.</p>}
+      {items &&
+        items.data?.map((item) => {
+          return (
+            <div>
+              <p>{item.id}</p>
+              <h1>{item.name}</h1>
+              <p>{item.price}</p>
+              <p>{item.createdAt.toString()}</p>
+              <p>{item.updatedAt.toString()}</p>
+            </div>
+          );
+        })}
+      <form onSubmit={handleSubmit}>
+        <Button type="submit">Submit</Button>
+      </form>
     </div>
   );
 }

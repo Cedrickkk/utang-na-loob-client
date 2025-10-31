@@ -1,4 +1,4 @@
-interface BaseResponseData {
+export interface BaseResponseData {
   id: number;
   createdAt: Date;
   updatedAt: Date;
@@ -11,9 +11,4 @@ export interface ApiResponse<T extends BaseResponseData> {
   data?: T[];
   error?: string;
   errors?: Record<string, string>;
-}
-
-export interface Item extends BaseResponseData {
-  name: string;
-  price: number;
 }
