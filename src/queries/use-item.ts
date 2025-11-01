@@ -1,31 +1,48 @@
 import { createItem, getItemById, getItems } from "@/api/item-api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  queryOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+export const itemQueries = {
+  all: () => ["items"] as const,
+  lists: () => [...itemQueries.all(), "list"] as const,
+  list: (filters: string) => {
+    return queryOptions({
+      queryKey: [...itemQueries.lists(), filters],
+      queryFn: getItems,
+      staleTime: 5000,
+    });
+  },
+  details: () => [...itemQueries.all(), "detail"] as const,
+  detail: (id: number) =>
+    queryOptions({
+      queryKey: [...itemQueries.details(), id],
+      queryFn: () => getItemById(id),
+      staleTime: 5000,
+      enabled: !!id,
+    }),
+};
+
+export const getItemsQueryOptions = itemQueries.list("");
 
 export const useGetItems = () => {
-  return useQuery({
-    queryKey: ["items"],
-    queryFn: getItems,
-  });
+  return useQuery(getItemsQueryOptions);
+};
+
+export const useGetItemById = (id: number) => {
+  return useQuery(itemQueries.detail(id));
 };
 
 export const useCreateItem = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ["createItem"],
     mutationFn: createItem,
-    onSuccess: () => {
+    onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: ["items"],
-      });
-    },
-  });
-};
-
-export const useGetItemById = (id: number) => {
-  return useQuery({
-    queryKey: ["item", id],
-    queryFn: () => getItemById(id),
-    enabled: !!id,
+        queryKey: itemQueries.all(),
+      }),
   });
 };
