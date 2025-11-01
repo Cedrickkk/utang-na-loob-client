@@ -1,4 +1,4 @@
-import { createItem, getItems } from "@/api/item-api";
+import { createItem, getItemById, getItems } from "@/api/item-api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useGetItems = () => {
@@ -19,5 +19,13 @@ export const useCreateItem = () => {
         queryKey: ["items"],
       });
     },
+  });
+};
+
+export const useGetItemById = (id: number) => {
+  return useQuery({
+    queryKey: ["item", id],
+    queryFn: () => getItemById(id),
+    enabled: !!id,
   });
 };
