@@ -5,6 +5,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+import { debtorQueries } from "./use-debtor";
 
 export const debtQueries = {
   all: () => ["debts"] as const,
@@ -42,7 +43,7 @@ export const useCreateDebt = () => {
     mutationFn: createDebt,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["debts"],
+        queryKey: debtorQueries.lists(),
       });
     },
   });

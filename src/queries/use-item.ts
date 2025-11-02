@@ -41,7 +41,7 @@ export const useCreateItem = () => {
     mutationFn: createItem,
     onSuccess: () =>
       queryClient.invalidateQueries({
-        queryKey: itemQueries.all(),
+        queryKey: itemQueries.lists(),
       }),
   });
 };

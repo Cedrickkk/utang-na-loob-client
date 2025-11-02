@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/card";
 import { debtorQueries, useGetDebtors } from "@/queries/use-debtor";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Hash, Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 export const Route = createFileRoute("/debtors/")({
   loader: ({ context }) =>

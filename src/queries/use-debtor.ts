@@ -42,7 +42,7 @@ export const useCreateDebtor = () => {
     mutationFn: createDebtor,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["debtors"],
+        queryKey: debtorQueries.lists(),
       });
     },
   });
