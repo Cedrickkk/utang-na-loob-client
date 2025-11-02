@@ -38,7 +38,6 @@ export const useCreateDebtor = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ["createDebtor"],
     mutationFn: createDebtor,
     onSuccess: () => {
       queryClient.invalidateQueries({
