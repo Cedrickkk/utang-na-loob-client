@@ -9,50 +9,296 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ItemsRouteRouteImport } from './routes/items/route'
+import { Route as DebtsRouteRouteImport } from './routes/debts/route'
+import { Route as DebtorsRouteRouteImport } from './routes/debtors/route'
+import { Route as DashboardRouteRouteImport } from './routes/dashboard/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as ItemsIndexRouteImport } from './routes/items/index'
 import { Route as DebtsIndexRouteImport } from './routes/debts/index'
+import { Route as DebtorsIndexRouteImport } from './routes/debtors/index'
+import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as ItemsItemIdRouteImport } from './routes/items/$itemId'
+import { Route as DebtorsDebtorIdRouteImport } from './routes/debtors/$debtorId'
 
-const DebtsIndexRoute = DebtsIndexRouteImport.update({
-  id: '/debts/',
-  path: '/debts/',
+const ItemsRouteRoute = ItemsRouteRouteImport.update({
+  id: '/items',
+  path: '/items',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DebtsRouteRoute = DebtsRouteRouteImport.update({
+  id: '/debts',
+  path: '/debts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DebtorsRouteRoute = DebtorsRouteRouteImport.update({
+  id: '/debtors',
+  path: '/debtors',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRouteRoute = DashboardRouteRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ItemsIndexRoute = ItemsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ItemsRouteRoute,
+} as any)
+const DebtsIndexRoute = DebtsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DebtsRouteRoute,
+} as any)
+const DebtorsIndexRoute = DebtorsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DebtorsRouteRoute,
+} as any)
+const DashboardIndexRoute = DashboardIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DashboardRouteRoute,
+} as any)
+const ItemsItemIdRoute = ItemsItemIdRouteImport.update({
+  id: '/$itemId',
+  path: '/$itemId',
+  getParentRoute: () => ItemsRouteRoute,
+} as any)
+const DebtorsDebtorIdRoute = DebtorsDebtorIdRouteImport.update({
+  id: '/$debtorId',
+  path: '/$debtorId',
+  getParentRoute: () => DebtorsRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/debts': typeof DebtsIndexRoute
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/debtors': typeof DebtorsRouteRouteWithChildren
+  '/debts': typeof DebtsRouteRouteWithChildren
+  '/items': typeof ItemsRouteRouteWithChildren
+  '/debtors/$debtorId': typeof DebtorsDebtorIdRoute
+  '/items/$itemId': typeof ItemsItemIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/debtors/': typeof DebtorsIndexRoute
+  '/debts/': typeof DebtsIndexRoute
+  '/items/': typeof ItemsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/debtors/$debtorId': typeof DebtorsDebtorIdRoute
+  '/items/$itemId': typeof ItemsItemIdRoute
+  '/dashboard': typeof DashboardIndexRoute
+  '/debtors': typeof DebtorsIndexRoute
   '/debts': typeof DebtsIndexRoute
+  '/items': typeof ItemsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/debtors': typeof DebtorsRouteRouteWithChildren
+  '/debts': typeof DebtsRouteRouteWithChildren
+  '/items': typeof ItemsRouteRouteWithChildren
+  '/debtors/$debtorId': typeof DebtorsDebtorIdRoute
+  '/items/$itemId': typeof ItemsItemIdRoute
+  '/dashboard/': typeof DashboardIndexRoute
+  '/debtors/': typeof DebtorsIndexRoute
   '/debts/': typeof DebtsIndexRoute
+  '/items/': typeof ItemsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/debts'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/debtors'
+    | '/debts'
+    | '/items'
+    | '/debtors/$debtorId'
+    | '/items/$itemId'
+    | '/dashboard/'
+    | '/debtors/'
+    | '/debts/'
+    | '/items/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/debts'
-  id: '__root__' | '/debts/'
+  to:
+    | '/'
+    | '/debtors/$debtorId'
+    | '/items/$itemId'
+    | '/dashboard'
+    | '/debtors'
+    | '/debts'
+    | '/items'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/debtors'
+    | '/debts'
+    | '/items'
+    | '/debtors/$debtorId'
+    | '/items/$itemId'
+    | '/dashboard/'
+    | '/debtors/'
+    | '/debts/'
+    | '/items/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  DebtsIndexRoute: typeof DebtsIndexRoute
+  IndexRoute: typeof IndexRoute
+  DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
+  DebtorsRouteRoute: typeof DebtorsRouteRouteWithChildren
+  DebtsRouteRoute: typeof DebtsRouteRouteWithChildren
+  ItemsRouteRoute: typeof ItemsRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/debts/': {
-      id: '/debts/'
+    '/items': {
+      id: '/items'
+      path: '/items'
+      fullPath: '/items'
+      preLoaderRoute: typeof ItemsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/debts': {
+      id: '/debts'
       path: '/debts'
       fullPath: '/debts'
-      preLoaderRoute: typeof DebtsIndexRouteImport
+      preLoaderRoute: typeof DebtsRouteRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/debtors': {
+      id: '/debtors'
+      path: '/debtors'
+      fullPath: '/debtors'
+      preLoaderRoute: typeof DebtorsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/items/': {
+      id: '/items/'
+      path: '/'
+      fullPath: '/items/'
+      preLoaderRoute: typeof ItemsIndexRouteImport
+      parentRoute: typeof ItemsRouteRoute
+    }
+    '/debts/': {
+      id: '/debts/'
+      path: '/'
+      fullPath: '/debts/'
+      preLoaderRoute: typeof DebtsIndexRouteImport
+      parentRoute: typeof DebtsRouteRoute
+    }
+    '/debtors/': {
+      id: '/debtors/'
+      path: '/'
+      fullPath: '/debtors/'
+      preLoaderRoute: typeof DebtorsIndexRouteImport
+      parentRoute: typeof DebtorsRouteRoute
+    }
+    '/dashboard/': {
+      id: '/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof DashboardIndexRouteImport
+      parentRoute: typeof DashboardRouteRoute
+    }
+    '/items/$itemId': {
+      id: '/items/$itemId'
+      path: '/$itemId'
+      fullPath: '/items/$itemId'
+      preLoaderRoute: typeof ItemsItemIdRouteImport
+      parentRoute: typeof ItemsRouteRoute
+    }
+    '/debtors/$debtorId': {
+      id: '/debtors/$debtorId'
+      path: '/$debtorId'
+      fullPath: '/debtors/$debtorId'
+      preLoaderRoute: typeof DebtorsDebtorIdRouteImport
+      parentRoute: typeof DebtorsRouteRoute
     }
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
+interface DashboardRouteRouteChildren {
+  DashboardIndexRoute: typeof DashboardIndexRoute
+}
+
+const DashboardRouteRouteChildren: DashboardRouteRouteChildren = {
+  DashboardIndexRoute: DashboardIndexRoute,
+}
+
+const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
+  DashboardRouteRouteChildren,
+)
+
+interface DebtorsRouteRouteChildren {
+  DebtorsDebtorIdRoute: typeof DebtorsDebtorIdRoute
+  DebtorsIndexRoute: typeof DebtorsIndexRoute
+}
+
+const DebtorsRouteRouteChildren: DebtorsRouteRouteChildren = {
+  DebtorsDebtorIdRoute: DebtorsDebtorIdRoute,
+  DebtorsIndexRoute: DebtorsIndexRoute,
+}
+
+const DebtorsRouteRouteWithChildren = DebtorsRouteRoute._addFileChildren(
+  DebtorsRouteRouteChildren,
+)
+
+interface DebtsRouteRouteChildren {
+  DebtsIndexRoute: typeof DebtsIndexRoute
+}
+
+const DebtsRouteRouteChildren: DebtsRouteRouteChildren = {
   DebtsIndexRoute: DebtsIndexRoute,
+}
+
+const DebtsRouteRouteWithChildren = DebtsRouteRoute._addFileChildren(
+  DebtsRouteRouteChildren,
+)
+
+interface ItemsRouteRouteChildren {
+  ItemsItemIdRoute: typeof ItemsItemIdRoute
+  ItemsIndexRoute: typeof ItemsIndexRoute
+}
+
+const ItemsRouteRouteChildren: ItemsRouteRouteChildren = {
+  ItemsItemIdRoute: ItemsItemIdRoute,
+  ItemsIndexRoute: ItemsIndexRoute,
+}
+
+const ItemsRouteRouteWithChildren = ItemsRouteRoute._addFileChildren(
+  ItemsRouteRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  DashboardRouteRoute: DashboardRouteRouteWithChildren,
+  DebtorsRouteRoute: DebtorsRouteRouteWithChildren,
+  DebtsRouteRoute: DebtsRouteRouteWithChildren,
+  ItemsRouteRoute: ItemsRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

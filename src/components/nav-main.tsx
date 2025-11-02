@@ -1,70 +1,58 @@
-import { ChevronRight, type LucideIcon } from "lucide-react";
-
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { LayoutDashboard, Package, PhilippinePeso, Users } from "lucide-react";
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import { Link } from "@tanstack/react-router";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}) {
+export default function NavMain() {
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Application</SidebarGroupLabel>
       <SidebarMenu>
-        {items.map((item) => (
-          <Collapsible
-            key={item.title}
-            asChild
-            defaultOpen={item.isActive}
-            className="group/collapsible"
-          >
+        <Link to="/dashboard">
+          {({ isActive }) => (
             <SidebarMenuItem>
-              <CollapsibleTrigger asChild>
-                <SidebarMenuButton tooltip={item.title}>
-                  {item.icon && <item.icon />}
-                  <span>{item.title}</span>
-                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                </SidebarMenuButton>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <SidebarMenuSub>
-                  {item.items?.map((subItem) => (
-                    <SidebarMenuSubItem key={subItem.title}>
-                      <SidebarMenuSubButton asChild>
-                        <a href={subItem.url}>
-                          <span>{subItem.title}</span>
-                        </a>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  ))}
-                </SidebarMenuSub>
-              </CollapsibleContent>
+              <SidebarMenuButton tooltip="Dashboard" isActive={isActive}>
+                <LayoutDashboard />
+                <span>Dashboard</span>
+              </SidebarMenuButton>
             </SidebarMenuItem>
-          </Collapsible>
-        ))}
+          )}
+        </Link>
+        <Link to="/debts">
+          {({ isActive }) => (
+            <SidebarMenuItem>
+              <SidebarMenuButton tooltip="Debts" isActive={isActive}>
+                <PhilippinePeso />
+                <span>Debts</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )}
+        </Link>
+        <Link to="/debtors">
+          {({ isActive }) => (
+            <SidebarMenuItem>
+              <SidebarMenuButton tooltip="Debtors" isActive={isActive}>
+                <Users />
+                <span>Debtors</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )}
+        </Link>
+        <Link to="/items">
+          {({ isActive }) => (
+            <SidebarMenuItem>
+              <SidebarMenuButton tooltip="Items" isActive={isActive}>
+                <Package />
+                <span>Items</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )}
+        </Link>
       </SidebarMenu>
     </SidebarGroup>
   );

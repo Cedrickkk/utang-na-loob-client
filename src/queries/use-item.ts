@@ -5,6 +5,7 @@ import {
   useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+
 export const itemQueries = {
   all: () => ["items"] as const,
   lists: () => [...itemQueries.all(), "list"] as const,
@@ -12,7 +13,7 @@ export const itemQueries = {
     return queryOptions({
       queryKey: [...itemQueries.lists(), filters],
       queryFn: getItems,
-      staleTime: 5000,
+      staleTime: 5 * 60 * 1000,
     });
   },
   details: () => [...itemQueries.all(), "detail"] as const,
@@ -20,15 +21,13 @@ export const itemQueries = {
     queryOptions({
       queryKey: [...itemQueries.details(), id],
       queryFn: () => getItemById(id),
-      staleTime: 5000,
+      staleTime: 5 * 60 * 1000,
       enabled: !!id,
     }),
 };
 
-export const getItemsQueryOptions = itemQueries.list("");
-
 export const useGetItems = () => {
-  return useQuery(getItemsQueryOptions);
+  return useQuery(itemQueries.list(""));
 };
 
 export const useGetItemById = (id: number) => {
