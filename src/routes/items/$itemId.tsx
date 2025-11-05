@@ -11,8 +11,7 @@ export const Route = createFileRoute("/items/$itemId")({
 
 function RouteComponent() {
   const { itemId } = Route.useParams();
-  const { data, isFetching } = useGetItemById(Number(itemId));
-  const item = data?.data;
+  const { data: item } = useGetItemById(Number(itemId));
 
   if (!item) {
     return <div>Item not available.</div>;
@@ -20,9 +19,8 @@ function RouteComponent() {
 
   return (
     <div>
-      {isFetching && <p>Updating...</p>}
-      <h1>{item.name}</h1>
-      <p>{item.price}</p>
+      <h1>{item?.data?.name}</h1>
+      <p>{item?.data?.price}</p>
     </div>
   );
 }

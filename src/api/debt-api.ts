@@ -3,7 +3,7 @@ import { debtSchema, type CreateDebt, type DebtResponse } from "@/schema/debt";
 import { type ApiError, type ApiResponse } from "@/schema/response";
 import axios from "axios";
 
-export const getDebts = async () => {
+export const getDebts = async (): Promise<ApiResponse<DebtResponse[]>> => {
   try {
     const { data } = await api.get<ApiResponse<DebtResponse[]>>("/debts");
     return data;
@@ -15,7 +15,9 @@ export const getDebts = async () => {
   }
 };
 
-export const createDebt = async (debt: CreateDebt) => {
+export const createDebt = async (
+  debt: CreateDebt,
+): Promise<ApiResponse<DebtResponse>> => {
   try {
     const { data } = await api.post<ApiResponse<DebtResponse>>(
       "/debts",
@@ -26,10 +28,13 @@ export const createDebt = async (debt: CreateDebt) => {
     if (axios.isAxiosError(error) && error.response) {
       throw error.response.data as ApiError;
     }
+    throw error;
   }
 };
 
-export const getDebtById = async (id: number) => {
+export const getDebtById = async (
+  id: number,
+): Promise<ApiResponse<DebtResponse>> => {
   try {
     const { data } = await api.get<ApiResponse<DebtResponse>>(`/debts/${id}`);
     return data;

@@ -18,6 +18,7 @@ import { Route as ItemsIndexRouteImport } from './routes/items/index'
 import { Route as DebtsIndexRouteImport } from './routes/debts/index'
 import { Route as DebtorsIndexRouteImport } from './routes/debtors/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard/index'
+import { Route as ItemsCreateRouteImport } from './routes/items/create'
 import { Route as ItemsItemIdRouteImport } from './routes/items/$itemId'
 import { Route as DebtorsDebtorIdRouteImport } from './routes/debtors/$debtorId'
 
@@ -66,6 +67,11 @@ const DashboardIndexRoute = DashboardIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DashboardRouteRoute,
 } as any)
+const ItemsCreateRoute = ItemsCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => ItemsRouteRoute,
+} as any)
 const ItemsItemIdRoute = ItemsItemIdRouteImport.update({
   id: '/$itemId',
   path: '/$itemId',
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/items': typeof ItemsRouteRouteWithChildren
   '/debtors/$debtorId': typeof DebtorsDebtorIdRoute
   '/items/$itemId': typeof ItemsItemIdRoute
+  '/items/create': typeof ItemsCreateRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/debtors/': typeof DebtorsIndexRoute
   '/debts/': typeof DebtsIndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/debtors/$debtorId': typeof DebtorsDebtorIdRoute
   '/items/$itemId': typeof ItemsItemIdRoute
+  '/items/create': typeof ItemsCreateRoute
   '/dashboard': typeof DashboardIndexRoute
   '/debtors': typeof DebtorsIndexRoute
   '/debts': typeof DebtsIndexRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/items': typeof ItemsRouteRouteWithChildren
   '/debtors/$debtorId': typeof DebtorsDebtorIdRoute
   '/items/$itemId': typeof ItemsItemIdRoute
+  '/items/create': typeof ItemsCreateRoute
   '/dashboard/': typeof DashboardIndexRoute
   '/debtors/': typeof DebtorsIndexRoute
   '/debts/': typeof DebtsIndexRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/items'
     | '/debtors/$debtorId'
     | '/items/$itemId'
+    | '/items/create'
     | '/dashboard/'
     | '/debtors/'
     | '/debts/'
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/'
     | '/debtors/$debtorId'
     | '/items/$itemId'
+    | '/items/create'
     | '/dashboard'
     | '/debtors'
     | '/debts'
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/items'
     | '/debtors/$debtorId'
     | '/items/$itemId'
+    | '/items/create'
     | '/dashboard/'
     | '/debtors/'
     | '/debts/'
@@ -224,6 +236,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardIndexRouteImport
       parentRoute: typeof DashboardRouteRoute
     }
+    '/items/create': {
+      id: '/items/create'
+      path: '/create'
+      fullPath: '/items/create'
+      preLoaderRoute: typeof ItemsCreateRouteImport
+      parentRoute: typeof ItemsRouteRoute
+    }
     '/items/$itemId': {
       id: '/items/$itemId'
       path: '/$itemId'
@@ -281,11 +300,13 @@ const DebtsRouteRouteWithChildren = DebtsRouteRoute._addFileChildren(
 
 interface ItemsRouteRouteChildren {
   ItemsItemIdRoute: typeof ItemsItemIdRoute
+  ItemsCreateRoute: typeof ItemsCreateRoute
   ItemsIndexRoute: typeof ItemsIndexRoute
 }
 
 const ItemsRouteRouteChildren: ItemsRouteRouteChildren = {
   ItemsItemIdRoute: ItemsItemIdRoute,
+  ItemsCreateRoute: ItemsCreateRoute,
   ItemsIndexRoute: ItemsIndexRoute,
 }
 

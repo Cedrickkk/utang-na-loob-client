@@ -11,15 +11,18 @@ export const debtStatusEnum = z.enum([
 ]);
 
 export const debtSchema = z.object({
-  debtorName: debtorSchema,
+  debtor: debtorSchema,
   debtStatus: debtStatusEnum,
   originalAmount: z.number(),
   currentBalance: z.number(),
 });
 
-export const debtResponseSchema = debtSchema.extend({
-  ...baseResponseDataSchema.shape,
-});
+export const debtResponseSchema = debtSchema
+  .extend({
+    ...baseResponseDataSchema.shape,
+  })
+  .omit({ debtor: true })
+  .extend({ debtorName: z.string() });
 
 export type CreateDebt = z.infer<typeof debtSchema>;
 export type DebtResponse = z.infer<typeof debtResponseSchema>;

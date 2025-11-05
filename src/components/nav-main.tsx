@@ -1,12 +1,23 @@
-import { LayoutDashboard, Package, PhilippinePeso, Users } from "lucide-react";
+import {
+  ChevronRight,
+  LayoutDashboard,
+  Package,
+  PhilippinePeso,
+  Users,
+} from "lucide-react";
 import {
   SidebarGroup,
   SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { Link } from "@tanstack/react-router";
+import { Collapsible, CollapsibleContent } from "./ui/collapsible";
+import { CollapsibleTrigger } from "@radix-ui/react-collapsible";
 
 export default function NavMain() {
   return (
@@ -45,12 +56,26 @@ export default function NavMain() {
         </Link>
         <Link to="/items">
           {({ isActive }) => (
-            <SidebarMenuItem>
-              <SidebarMenuButton tooltip="Items" isActive={isActive}>
-                <Package />
-                <span>Items</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            <Collapsible className="group/collapsible">
+              <SidebarMenuItem>
+                <CollapsibleTrigger asChild>
+                  <SidebarMenuButton tooltip="Items" isActive={isActive}>
+                    <Package />
+                    <span>Items</span>
+                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuButton>
+                </CollapsibleTrigger>
+                <CollapsibleContent>
+                  <SidebarMenuSub>
+                    <Link to="/items/create">
+                      <SidebarMenuSubItem>
+                        <SidebarMenuSubButton>Create</SidebarMenuSubButton>
+                      </SidebarMenuSubItem>
+                    </Link>
+                  </SidebarMenuSub>
+                </CollapsibleContent>
+              </SidebarMenuItem>
+            </Collapsible>
           )}
         </Link>
       </SidebarMenu>

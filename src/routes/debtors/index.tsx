@@ -11,17 +11,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 export const Route = createFileRoute("/debtors/")({
-  loader: ({ context }) =>
-    context.queryClient.ensureQueryData(debtorQueries.list()),
+  loader: ({ context }) => {
+    context.queryClient.ensureQueryData(debtorQueries.list());
+  },
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const { data: debtors, isPending } = useGetDebtors();
-
-  if (isPending) {
-    return "Pending...";
-  }
+  const { data: debtors } = useGetDebtors();
 
   return (
     <div className="my-4 grid grid-cols-3 gap-2">

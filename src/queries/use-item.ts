@@ -6,12 +6,18 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
+export interface ItemListFilters {
+  search?: string;
+  page?: number;
+  pageSize?: number;
+}
+
 export const itemQueries = {
   all: () => ["items"] as const,
   lists: () => [...itemQueries.all(), "list"] as const,
-  list: (filters: string) => {
+  list: (filters: ItemListFilters) => {
     return queryOptions({
-      queryKey: [...itemQueries.lists(), filters],
+      queryKey: [...itemQueries.lists(), { filters }],
       queryFn: getItems,
       staleTime: 5 * 60 * 1000,
     });
@@ -26,8 +32,8 @@ export const itemQueries = {
     }),
 };
 
-export const useGetItems = () => {
-  return useQuery(itemQueries.list(""));
+export const useGetItems = (filters: ItemListFilters) => {
+  return useQuery(itemQueries.list(filters));
 };
 
 export const useGetItemById = (id: number) => {

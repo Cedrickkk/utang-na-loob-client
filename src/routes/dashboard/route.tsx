@@ -7,7 +7,7 @@ export const Route = createFileRoute("/dashboard")({
 function RouteComponent() {
   return (
     <div className="p-6">
-      <h1 className="text-xl font-bold tracking-tight lg:text-2xl">
+      <h1 className="mb-6 text-xl font-bold tracking-tight text-white lg:text-2xl">
         Dashboard
       </h1>
       <Outlet />
